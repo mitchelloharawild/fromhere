@@ -1,0 +1,29 @@
+Package: fromhere
+Title: File Paths Relative to Project Roots
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Mitchell",
+             family = "O'Hara-Wild",
+             role = c("aut", "cre"),
+             email = "mail@mitchelloharawild.com",
+             comment = c(ORCID = "0000-0001-6729-7695")))
+Description: Provides a set of helper functions for constructing file paths 
+    relative to the root of various types of projects, such as R packages, Git
+    repositories, and more. File paths are specified with function arguments,
+    or `$` to navigate into folders to specific files supported by 
+    autocompletion.
+License: MIT + file LICENSE
+Suggests: 
+    here,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/mitchelloharawild/fromhere
+BugReports: https://github.com/mitchelloharawild/fromhere/issues
+RoxygenNote: 7.3.2
+Imports: 
+    rprojroot
+VignetteBuilder: knitr
