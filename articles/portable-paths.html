@@ -100,38 +100,100 @@ roots can be created using the <code>fromhere</code> package, with
 discussion on how each path type affects the portability of your
 project.</p>
 <div class="section level2">
-<h2 id="absolute-vs--relative-paths">Absolute vs. Relative paths<a class="anchor" aria-label="anchor" href="#absolute-vs--relative-paths"></a>
+<h2 id="project-portability">Project portability<a class="anchor" aria-label="anchor" href="#project-portability"></a>
 </h2>
-<!-- Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems. -->
+<p>How you organise your project files and specify paths to them changes
+the portability of your project. Less portable file paths require more
+specific file structures, for example in increasing portability:</p>
+<ul>
+<li><p><strong>Absolute paths</strong>
+(<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
+These paths require the exact same file structure from the file system
+root (including the username John)</p></li>
+<li><p><strong>Home directory paths</strong>
+(<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
+These paths start from the user’s home directory (usernames can differ,
+but location cannot)</p></li>
+<li><p><strong>Project paths</strong>
+(<code>from_rproj("data/survey_cleaned_2024.csv")</code>) These paths
+start from the project directory (the project location can differ, but
+project organisation cannot)</p></li>
+<li>
+<p><strong>Execution paths</strong>
+(<code>from_wd("resources/logo.png")</code> within
+<code>"docs/analysis.qmd"</code>) These paths start from the current
+working directory (execution folder).</p>
+<p>The working directory can change depending on context:</p>
+<ul>
+<li>Scripts within an R Project (working directory is the project
+folder)</li>
+<li>RMarkdown/Quarto documents (working directory is the document’s
+folder)</li>
+<li>If changed manually with <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> (please don’t do
+this!)</li>
+</ul>
+</li>
+</ul>
+<div class="section level3">
+<h3 id="portability-example">Portability example<a class="anchor" aria-label="anchor" href="#portability-example"></a>
+</h3>
+<p>The files (and paths) used within each part of your project affects
+its portability.</p>
 <p>Consider the R project <code>"my-awesome-project"</code>, which has
 been saved to the Documents folder on John’s computer
 (<code>"/Users/John/Documents/"</code>). It has the following
 contents:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">my-awesome-project/</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">├──</span> data-raw/                   <span class="co"># Raw / unprocessed data files</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">│</span>   ├── survey_results_2024.csv</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ex">│</span>   ├── population_data.xlsx</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ex">├──</span> data/                       <span class="co"># Clean / processed data files</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="ex">│</span>   ├── survey_cleaned_2024.csv</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="ex">│</span>   ├── population_summary.csv</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="ex">├──</span> R/                          <span class="co"># R scripts</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="ex">│</span>   ├── data_cleaning.R</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="ex">│</span>   ├── exploratory_analysis.R</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="ex">│</span>   └── model_fitting.R</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="ex">├──</span> docs/                       <span class="co"># Documents</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="ex">│</span>   ├── analysis.qmd</span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="ex">│</span>   ├── memo.qmd</span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="ex">│</span>   ├── resources/              <span class="co"># Document resources</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="ex">│</span>   │   ├── logo.png</span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="ex">│</span>   │   └── signature.png</span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="ex">├──</span> outputs/                    <span class="co"># Results, figures, tables, and other outputs</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="ex">│</span>   ├── figures/                <span class="co"># Graphs and charts</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="ex">│</span>   │   ├── age_distribution_plot.png</span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="ex">│</span>   │   └── time_series_trends.jpeg</span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="ex">│</span>   └── tables/                 <span class="co"># Data tables and results</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="ex">│</span>       ├── regression_summary.csv</span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="ex">├──</span> README.md                   <span class="co"># Project description and instructions</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="ex">└──</span> my-awesome-project.Rproj    <span class="co"># R Project file</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">├──</span> data/                       <span class="co"># Clean / processed data files</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ex">│</span>   ├── survey_cleaned_2024.csv</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ex">│</span>   ├── population_summary.csv</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="ex">├──</span> R/                          <span class="co"># R scripts</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="ex">├──</span> docs/                       <span class="co"># Documents</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="ex">│</span>   ├── analysis.qmd</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="ex">│</span>   ├── memo.qmd</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="ex">│</span>   ├── resources/              <span class="co"># Document resources</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="ex">│</span>   │   ├── logo.png</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="ex">│</span>   │   └── signature.png</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="ex">├──</span> outputs/                    <span class="co"># Results, figures, tables, and other outputs</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="ex">│</span>   ├── figures/                <span class="co"># Graphs and charts</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="ex">│</span>   └── tables/                 <span class="co"># Data tables and results</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="ex">│</span>       ├── regression_summary.csv</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="ex">├──</span> README.md                   <span class="co"># Project description and instructions</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="ex">└──</span> my-awesome-project.Rproj    <span class="co"># R Project file</span></span></code></pre></div>
+<p>Consider the two documents in this project,
+<code>"docs/analysis.qmd"</code> and <code>"docs/memo.qmd"</code>:</p>
+<ul>
+<li>
+<code>"docs/analysis.qmd"</code> is a complete analysis using
+<code><a href="../reference/from_here.html">from_rproj()</a></code> to access data, code, and outputs from the
+project. When sharing this document with others, you will need to share
+the entire project for the document to be reproducible.</li>
+<li>
+<code>"docs/memo.qmd"</code> is a brief message using only the logo
+and signature resources with <code><a href="../reference/from_here.html">from_wd()</a></code>. To reproduce this
+document, the entire project is not needed since everything needed is
+contained within the document folder (<code>"docs"</code>).</li>
+</ul>
+<p>The <code>memo.qmd</code> document is more portable than
+<code>analysis.qmd</code> since it can be moved independently of the
+broader project. It is good practice to organise your project such that
+individual components are portable. In this case the logo and signature
+is kept within the <code>docs</code> folder because they are only needed
+for documents. While less portable than the memo, the analysis is still
+reasonably portable since everything is contained in the project folder
+(rather than files scattered around the computer).</p>
+<p>By adopting relative paths and understanding project portability, you
+can create projects that are robust, shareable, and adaptable to new
+environments. The <code>fromhere</code> package simplifies this process,
+allowing you to declare paths relative to various project roots,
+enhancing the portability of your work.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="absolute-vs--relative-paths">Absolute vs. Relative paths<a class="anchor" aria-label="anchor" href="#absolute-vs--relative-paths"></a>
+</h2>
+<!-- Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems. -->
 <div class="section level3">
 <h3 id="absolute-paths-not-portable">Absolute paths (Not Portable)<a class="anchor" aria-label="anchor" href="#absolute-paths-not-portable"></a>
 </h3>
@@ -177,83 +239,12 @@ starting from the project folder even in RMarkdown/Quarto documents:</p>
 <code class="sourceCode R"><span><span class="co"># Path relative to the project folder</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mitchelloharawild/fromhere" class="external-link">fromhere</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="../reference/from_here.html">from_rproj</a></span><span class="op">(</span><span class="st">"data/survey_cleaned_2024.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="project-portability">Project portability<a class="anchor" aria-label="anchor" href="#project-portability"></a>
-</h2>
-<p>How you organise your project files and specify paths to them changes
-the portability of your project. Less portable file paths require more
-specific file structures, for example in increasing portability:</p>
-<ul>
-<li><p><strong>Absolute paths</strong>
-(<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
-These paths require the exact same file structure from the file system
-root (including the username John)</p></li>
-<li><p><strong>Home directory paths</strong>
-(<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
-These paths start from the user’s home directory (usernames can differ,
-but location cannot)</p></li>
-<li><p><strong>Project paths</strong>
-(<code>from_rproj("data/survey_cleaned_2024.csv")</code>) These paths
-start from the project directory (the project location can differ, but
-project organisation cannot)</p></li>
-<li>
-<p><strong>Execution paths</strong>
-(<code>from_wd("resources/logo.png")</code> within
-<code>"docs/analysis.qmd"</code>) These paths start from the current
-working directory (execution folder).</p>
-<p>The working directory can change depending on context:</p>
-<ul>
-<li>Scripts within an R Project (working directory is the project
-folder)</li>
-<li>RMarkdown/Quarto documents (working directory is the document’s
-folder)</li>
-<li>If changed manually with <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> (please don’t do
-this!)</li>
-</ul>
-</li>
-</ul>
-<div class="section level3">
-<h3 id="portability-example">Portability example<a class="anchor" aria-label="anchor" href="#portability-example"></a>
-</h3>
-<p>The files (and paths) used within each part of your project affects
-its portability.</p>
-<p>Consider the two documents in this project,
-<code>"docs/analysis.qmd"</code> and <code>"docs/memo.qmd"</code>:</p>
-<ul>
-<li>
-<code>"docs/analysis.qmd"</code> is a complete analysis using
-<code><a href="../reference/from_here.html">from_rproj()</a></code> to access data, code, and outputs from the
-project. When sharing this document with others, you will need to share
-the entire project for the document to be reproducible.</li>
-<li>
-<code>"docs/memo.qmd"</code> is a brief message using only the logo
-and signature resources with <code><a href="../reference/from_here.html">from_wd()</a></code>. To reproduce this
-document, the entire project is not needed since everything needed is
-contained within the document folder (<code>"docs"</code>).</li>
-</ul>
-<p>The <code>memo.qmd</code> document is more portable than
-<code>analysis.qmd</code> since it can be moved independently of the
-broader project. It is good practice to organise your project such that
-individual components are portable. In this case the logo and signature
-is kept within the <code>docs</code> folder because they are only needed
-for documents. While less portable than the memo, the analysis is still
-reasonably portable since everything is contained in the project folder
-(rather than files scattered around the computer).</p>
-<p>By adopting relative paths and understanding project portability, you
-can create projects that are robust, shareable, and adaptable to new
-environments. The <code>fromhere</code> package simplifies this process,
-allowing you to declare paths relative to various project roots,
-enhancing the portability of your work.</p>
-</div>
-<div class="section level3">
-<h3 id="aside---and---">
-<strong>Aside: <code>.</code>, and <code>..</code></strong><a class="anchor" aria-label="anchor" href="#aside---and---"></a>
-</h3>
-<p>File paths can also include <code>.</code> and <code>..</code>.</p>
-<p>These special paths refer to current directory (<code>.</code>) and
-the parent directory (<code>..</code>).</p>
+<div class="section level4">
+<h4 id="aside---and---">Aside: <code>.</code>, and <code>..</code><a class="anchor" aria-label="anchor" href="#aside---and---"></a>
+</h4>
+<p>File paths can also include <code>.</code> and <code>..</code>, these
+paths refer to current directory (<code>.</code>) and the parent
+directory (<code>..</code>).</p>
 <p>This allows you to navigate up folders, for example
 <code>from_rproj("..")</code> will give you the folder above the project
 (<code>"/Users/John/Documents"</code> for John, and
@@ -261,6 +252,7 @@ the parent directory (<code>..</code>).</p>
 <p>Using <code>from_rproj("..")</code> results in a less portable
 project, since your work now depends on the file structure above your
 project folder.</p>
+</div>
 </div>
 </div>
   </div>
