@@ -1,6 +1,6 @@
 Package: fromhere
 Title: File Paths Relative to Project Roots
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Mitchell",
              family = "O'Hara-Wild",
@@ -26,5 +26,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/mitchelloharawild/fromhere
 BugReports: https://github.com/mitchelloharawild/fromhere/issues
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.2.9000
 VignetteBuilder: knitr
