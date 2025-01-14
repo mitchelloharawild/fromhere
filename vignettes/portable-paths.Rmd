@@ -1,0 +1,135 @@
+---
+title: "Portable paths for sharing projects"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Portable paths for sharing projects}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fromhere)
+```
+
+Using appropriate relative file paths is essential for creating portable and reproducible projects. Portable projects are self-contained, meaning all code, data and other files needed by your project are contained within it.
+
+Relative paths play a central role in portability, as they allow you to specify file locations relative to a known reference point (e.g., the project root) instead of using system-specific absolute paths. This allows file paths to work on any system, which allows others to reproduce your work without modifying file paths.
+
+This vignette demonstrates how relative paths from different project roots can be created using the `fromhere` package, with discussion on how each path type affects the portability of your project.
+
+## Absolute vs. Relative paths
+
+Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems.
+
+Consider the R project "my-awesome-project", which has been saved to the John's Documents folder ( `"/Users/John/Documents/"`). It has the following contents:
+
+```bash
+my-awesome-project/
+├── data-raw/                   # Raw / unprocessed data files
+│   ├── survey_results_2024.csv
+│   ├── population_data.xlsx
+├── data/                       # Clean / processed data files
+│   ├── survey_cleaned_2024.csv
+│   ├── population_summary.csv
+├── R/                          # R scripts
+│   ├── data_cleaning.R
+│   ├── exploratory_analysis.R
+│   └── model_fitting.R
+├── docs/                       # Documents
+│   ├── analysis.qmd
+│   ├── memo.qmd
+│   ├── resources/              # Document resources
+│   │   ├── logo.png
+│   │   └── signature.png
+├── outputs/                    # Results, figures, tables, and other outputs
+│   ├── figures/                # Graphs and charts
+│   │   ├── age_distribution_plot.png
+│   │   └── time_series_trends.jpeg
+│   └── tables/                 # Data tables and results
+│       ├── regression_summary.csv
+├── README.md                   # Project description and instructions
+└── my-awesome-project.Rproj    # R Project file
+```
+
+### Absolute paths (Not Portable)
+
+An **absolute path** includes the full location of the files on the computer, so reading the survey data would be:
+
+```r
+# Path hardcoded to John's specific system
+read.csv("/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv")
+```
+
+This is **NOT** portable, imagine if this project was shared with Jane who saved it in the Downloads folder of their Windows computer. In this case, the file path starting with "/Users/John/Documents" doesn't exist on Jane's computer. Instead the suitable path for Jane is:
+
+```r
+# Path hardcoded to Jane's specific system
+read.csv("C:\Users\Jane\Downloads\my-awesome-project\data\survey_cleaned_2024.csv")
+```
+
+As a result, the code cannot be reproduced without modification. Jane will have to update all the paths for them to work on her computer.
+
+### Relative paths (Portable)
+
+A **relative path** includes the location of files from a specified starting point. In R, relative paths are start from the current working directory - if you're working within an RStudio Project this will be your project folder.
+
+The `fromhere` package allows you to specify the starting point of relative paths explicitly. This can be useful since the paths will work even if the working directory in R changes.
+
+The code for reading the survey data with a relative path is:
+
+```r
+# Path relative to the project root
+read.csv(from_rproj("data/survey_cleaned_2024.csv"))
+```
+
+Notice that the relative path doesn't include any details about the location of the project on the computer. This allows the project folder to be moved around (on the same computer or shared with others) without needing to change the file paths.
+
+## Project portability
+
+How you organise your project files and specify paths to them changes the portability of your project. Less portable file paths require more specific file structures, for example in increasing portability:
+
+* Absolute paths (`"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`)
+  These paths require the exact same file structure from the file system root (including the username John)
+* Home directory paths (`"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`)
+  These paths start from the user's home directory (usernames can differ, but location cannot)
+* Project paths (`from_rproj("data/survey_cleaned_2024.csv")`)
+  These paths start from the project directory (the project location can differ, but project organisation cannot)
+* Execution paths (`from_wd("resources/logo.png")` within `"docs/analysis.qmd"`)
+  These paths start from the current working directory (execution folder).
+  
+  The working directory can change depending on context:
+  * Scripts within an R Project (working directory is the project folder)
+  * RMarkdown/Quarto documents (working directory is the document's folder)
+  * If changed manually with `setwd()` (please don't do this!)
+
+> **Aside: `.`, and `..`**
+> 
+> File paths can also include `.` and `..`.
+> These special paths refer to current directory (`.`) and the parent directory (`..`).
+>
+> This allows you to navigate up folders, for example `from_rproj("..")` will give you the folder above the project ("/Users/John/Documents" for John, and "C:\Users\Jane\Downloads" for Jane).
+> 
+> Using `from_rproj("..")` results in a less portable project, since your work now depends on the file structure above your project folder.
+
+### Portability example
+
+The files (and paths) used within each part of your project affects its portability.
+
+Consider the two documents in this project, `"docs/analysis.qmd"` and `"docs/memo.qmd"`:
+
+* `"docs/analysis.qmd"` is a complete analysis using `from_rproj()` to access data, code, and outputs from the project.
+  When sharing this document with others, you will need to share the entire project for the document to be reproducible.
+* `"docs/memo.qmd"` is a brief message using only the logo and signature resources with `from_wd()`.
+  To reproduce this document, the entire project is not needed since everything needed is contained within the document folder (`"docs"`).
+
+The `memo.qmd` document is more portable than `analysis.qmd` since it can be moved independently of the broader project. It is good practice to organise your project such that individual components are portable. In this case the logo and signature is kept within the `docs` folder because they are only needed for documents. While less portable than the memo, the analysis is still reasonably portable since everything is contained in the project folder (rather than files scattered around the computer).
+
+By adopting relative paths and understanding project portability, you can create projects that are robust, shareable, and adaptable to new environments. The `fromhere` package simplifies this process, allowing you to declare paths relative to various project roots, enhancing the portability of your work.
+
