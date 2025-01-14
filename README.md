@@ -28,6 +28,7 @@ desired project root from one of these supported project roots:
 - `from_r_package()`: For R package directories.
 - `from_remake()`: For remake project directories.
 - `from_drake()`: For drake project directories.
+- `from_targets()`: For targets project directories.
 - `from_pkgdown()`: For pkgdown project directories.
 - `from_renv()`: For renv project directories.
 - `from_projectile()`: For Projectile project directories.
