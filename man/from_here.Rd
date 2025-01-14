@@ -56,7 +56,7 @@ A file path which allows further traversal with \code{$} autocompletion.
 }
 \description{
 These functions generate file paths relative to the root of a specific type of project.
-They use criteria from \link{rprojroot} to locate the root directory and construct paths
+They use criteria from \code{rprojroot} to locate the root directory and construct paths
 using \code{\link[=file.path]{file.path()}}.
 }
 \details{

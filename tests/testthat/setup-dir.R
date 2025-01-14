@@ -1,5 +1,5 @@
 # Create a temporary directory for testing
-temp_dir <- tempdir()
+temp_dir <- normalizePath(tempdir(), winslash = "/")
 
 # Define folder structure
 project_structure <- list(

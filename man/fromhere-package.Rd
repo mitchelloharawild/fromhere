@@ -6,7 +6,7 @@
 \alias{fromhere-package}
 \title{fromhere: File Paths Relative to Project Roots}
 \description{
-Provides a set of helper functions for constructing file paths relative to the root of various types of projects, such as R packages, Git repositories, and more. File paths are specified with function arguments, or `$` to navigate into folders to specific files supported by autocompletion.
+Provides a set of helper functions for constructing file paths relative to the root of various types of projects, such as R packages, Git repositories, and more. File paths are specified with function arguments, or `$` to navigate into folders to specific files supported by auto-completion.
 }
 \seealso{
 Useful links:

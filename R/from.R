@@ -1,7 +1,7 @@
 #' Create a File Path Relative to a Project Root
 #'
 #' These functions generate file paths relative to the root of a specific type of project.
-#' They use criteria from [rprojroot] to locate the root directory and construct paths
+#' They use criteria from `rprojroot` to locate the root directory and construct paths
 #' using [file.path()].
 #'
 #' Functions support two ways to specify paths: as function arguments
