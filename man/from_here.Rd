@@ -66,7 +66,7 @@ Functions support two ways to specify paths: as function arguments
 
 The following \verb{from_*} functions are available:
 \itemize{
-\item \code{from_here}: For paths relative to the {here} package's automatic project root.
+\item \code{from_here}: For paths relative to the \code{{here}} package's automatic project root.
 \item \code{from_rproj}: For R project directories.
 \item \code{from_r_package}: For R package directories.
 \item \code{from_remake}: For remake project directories.
@@ -83,6 +83,10 @@ The following \verb{from_*} functions are available:
 }
 }
 \examples{
+# Construct a path from the current working directory
+from_wd()
+
+\dontrun{
 # Construct a path to a file in an R package
 from_r_package("R", "my_file.R")
 
@@ -91,6 +95,7 @@ from_pkgdown$docs$index.html
 
 # Construct a path in a Git repository
 from_git("src", "main.c")
+}
 
 }
 \seealso{

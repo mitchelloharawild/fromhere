@@ -9,7 +9,7 @@
 #' (e.g., `from_r_package$path$to$file`), which supports autocompletion.
 #'
 #' The following `from_*` functions are available:
-#' - `from_here`: For paths relative to the {here} package's automatic project root.
+#' - `from_here`: For paths relative to the `{here}` package's automatic project root.
 #' - `from_rproj`: For R project directories.
 #' - `from_r_package`: For R package directories.
 #' - `from_remake`: For remake project directories.
@@ -28,6 +28,10 @@
 #' @return A file path which allows further traversal with `$` autocompletion.
 #'
 #' @examples
+#' # Construct a path from the current working directory
+#' from_wd()
+#'
+#' \dontrun{
 #' # Construct a path to a file in an R package
 #' from_r_package("R", "my_file.R")
 #'
@@ -36,6 +40,7 @@
 #'
 #' # Construct a path in a Git repository
 #' from_git("src", "main.c")
+#' }
 #'
 #' @seealso [rprojroot::find_root()]
 #' @rdname from_here

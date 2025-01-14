@@ -14,7 +14,8 @@ Description: Provides a set of helper functions for constructing file paths
     autocompletion.
 License: MIT + file LICENSE
 Imports: 
-    rprojroot
+    rprojroot,
+    utils
 Suggests: 
     here,
     knitr,

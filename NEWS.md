@@ -1,4 +1,4 @@
-# fromhere (development version)
+# fromhere 0.1.0
 
 ## Initial Release
 

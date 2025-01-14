@@ -1,4 +1,3 @@
-#' @export
 new_from_path <- function(path) {
   structure(path, class = "from_path")
 }
@@ -13,6 +12,7 @@ new_from_path <- function(path) {
   x(name)
 }
 
+#' @importFrom utils .DollarNames
 #' @export
 .DollarNames.from_path <- function(x, pattern) {
   list.files(x, pattern = pattern)
@@ -24,7 +24,7 @@ new_from_path <- function(path) {
 }
 
 #' @export
-print.from_path <- function(x) {
+print.from_path <- function(x, ...) {
   attributes(x) <- NULL
   NextMethod()
 }
