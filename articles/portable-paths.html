@@ -107,35 +107,38 @@ project.</p>
 </h2>
 <p>How you organise your project files and specify paths to them changes
 the portability of your project. Less portable file paths require more
-specific file structures, for example in increasing portability:</p>
+specific file structures. For example, in increasing portability:</p>
 <ul>
-<li><p><strong>Absolute paths</strong>
-(<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
-These paths require the exact same file structure from the file system
-root (including the username John)</p></li>
-<li><p><strong>Home directory paths</strong>
-(<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
-These paths start from the user’s home directory (usernames can differ,
-but location cannot)</p></li>
-<li><p><strong>Project paths</strong>
-(<code>from_rproj("data/survey_cleaned_2024.csv")</code>) These paths
-start from the project directory (the project location can differ, but
-project organisation cannot)</p></li>
 <li>
-<p><strong>Execution paths</strong>
-(<code>from_wd("resources/logo.png")</code> within
-<code>"docs/analysis.qmd"</code>) These paths start from the current
-working directory (execution folder).</p>
-<p>The working directory can change depending on context:</p>
-<ul>
-<li>Scripts within an R Project (working directory is the project
-folder)</li>
-<li>RMarkdown/Quarto documents (working directory is the document’s
-folder)</li>
-<li>If changed manually with <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> (please don’t do
-this!)</li>
-</ul>
+<strong>Absolute paths</strong> require the exact same file
+structure from the file system root (including the username John):
+<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>
 </li>
+<li>
+<strong>Home directory paths</strong> start from the user’s home
+directory (usernames can differ, but location cannot):
+<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>
+</li>
+<li>
+<strong>Project paths</strong> start from the project directory (the
+project location can differ, but project organisation cannot):
+<code>from_rproj("data/survey_cleaned_2024.csv")</code>
+</li>
+<li>
+<strong>Execution paths</strong> start from the current working
+directory (execution folder): <code>from_wd("resources/logo.png")</code>
+within <code>"docs/analysis.qmd"</code>
+</li>
+</ul>
+<p>The working directory can differ depending on context. In
+general,</p>
+<ul>
+<li>When executing scripts within an R Project the working directory is
+the project folder</li>
+<li>When rendering RMarkdown/Quarto documents the working directory is
+the document’s folder</li>
+<li>Within a session, you can change the working manually with
+<code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> (but please don’t do this!)</li>
 </ul>
 <div class="section level3">
 <h3 id="portability-example">Portability example<a class="anchor" aria-label="anchor" href="#portability-example"></a>
@@ -194,11 +197,11 @@ enhancing the portability of your work.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="absolute-vs--relative-paths">Absolute vs. Relative paths<a class="anchor" aria-label="anchor" href="#absolute-vs--relative-paths"></a>
+<h2 id="absolute-vs--relative-paths">Absolute vs. Relative Paths<a class="anchor" aria-label="anchor" href="#absolute-vs--relative-paths"></a>
 </h2>
 <!-- Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems. -->
 <div class="section level3">
-<h3 id="absolute-paths-not-portable">Absolute paths (Not Portable)<a class="anchor" aria-label="anchor" href="#absolute-paths-not-portable"></a>
+<h3 id="absolute-paths-not-portable">Absolute paths (not portable)<a class="anchor" aria-label="anchor" href="#absolute-paths-not-portable"></a>
 </h3>
 <p>An <strong>absolute path</strong> includes the full location of the
 files on the computer, so reading the survey data would be:</p>
@@ -216,7 +219,7 @@ Instead the suitable path for Jane is:</p>
 will have to update all the paths for them to work on her computer.</p>
 </div>
 <div class="section level3">
-<h3 id="relative-paths-portable">Relative paths (Portable)<a class="anchor" aria-label="anchor" href="#relative-paths-portable"></a>
+<h3 id="relative-paths-portable">Relative paths (portable)<a class="anchor" aria-label="anchor" href="#relative-paths-portable"></a>
 </h3>
 <p>A <strong>relative path</strong> specifies the location of files from
 a starting folder. In an R session, relative paths start from the
