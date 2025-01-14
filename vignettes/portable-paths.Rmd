@@ -28,15 +28,23 @@ This vignette demonstrates how relative paths from different project roots can b
 
 How you organise your project files and specify paths to them changes the portability of your project. Less portable file paths require more specific file structures. For example, in increasing portability:
 
-* **Absolute paths** require the exact same file structure from the file system root (including the username John): `"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
-* **Home directory paths** start from the user's home directory (usernames can differ, but location cannot): `"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
-* **Project paths** start from the project directory (the project location can differ, but project organisation cannot): `from_rproj("data/survey_cleaned_2024.csv")`
-* **Execution paths** start from the current working directory (execution folder): `from_wd("resources/logo.png")` within `"docs/analysis.qmd"`
+* **Absolute paths** require the exact same file structure from the file system root (including the username John)
+
+  e.g. `"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
+* **Home directory paths** start from the user's home directory (usernames can differ, but location cannot)
+
+  e.g. `"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
+* **Project paths** start from the project directory (the project location can differ, but project organisation cannot)
+
+  e.g. `from_rproj("data/survey_cleaned_2024.csv")`
+* **Execution paths** start from the current working directory (execution folder)
+
+  e.g. `from_wd("resources/logo.png")` within `"docs/analysis.qmd"`
   
 The working directory can differ depending on context. In general,
   
-* When executing scripts within an R Project the working directory is the project folder
 * When rendering RMarkdown/Quarto documents the working directory is the document's folder
+* When executing scripts within an R Project the working directory is the project folder
 * Within a session, you can change the working manually with `setwd()` (but please don't do this!)
 
 ### Portability example
