@@ -9,6 +9,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fromhere)](https://CRAN.R-project.org/package=fromhere)
+[![R-CMD-check](https://github.com/mitchelloharawild/fromhere/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mitchelloharawild/fromhere/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `fromhere` R package helps you create file paths relative to various
