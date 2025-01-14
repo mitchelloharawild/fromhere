@@ -26,21 +26,18 @@ This vignette demonstrates how relative paths from different project roots can b
 
 ## Project portability
 
-How you organise your project files and specify paths to them changes the portability of your project. Less portable file paths require more specific file structures, for example in increasing portability:
+How you organise your project files and specify paths to them changes the portability of your project. Less portable file paths require more specific file structures. For example, in increasing portability:
 
-* **Absolute paths** (`"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`)
-  These paths require the exact same file structure from the file system root (including the username John)
-* **Home directory paths** (`"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`)
-  These paths start from the user's home directory (usernames can differ, but location cannot)
-* **Project paths** (`from_rproj("data/survey_cleaned_2024.csv")`)
-  These paths start from the project directory (the project location can differ, but project organisation cannot)
-* **Execution paths** (`from_wd("resources/logo.png")` within `"docs/analysis.qmd"`)
-  These paths start from the current working directory (execution folder).
+* **Absolute paths** require the exact same file structure from the file system root (including the username John): `"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
+* **Home directory paths** start from the user's home directory (usernames can differ, but location cannot): `"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"`
+* **Project paths** start from the project directory (the project location can differ, but project organisation cannot): `from_rproj("data/survey_cleaned_2024.csv")`
+* **Execution paths** start from the current working directory (execution folder): `from_wd("resources/logo.png")` within `"docs/analysis.qmd"`
   
-  The working directory can change depending on context:
-  * Scripts within an R Project (working directory is the project folder)
-  * RMarkdown/Quarto documents (working directory is the document's folder)
-  * If changed manually with `setwd()` (please don't do this!)
+The working directory can differ depending on context. In general,
+  
+* When executing scripts within an R Project the working directory is the project folder
+* When rendering RMarkdown/Quarto documents the working directory is the document's folder
+* Within a session, you can change the working manually with `setwd()` (but please don't do this!)
 
 ### Portability example
 
@@ -80,12 +77,11 @@ The `memo.qmd` document is more portable than `analysis.qmd` since it can be mov
 
 By adopting relative paths and understanding project portability, you can create projects that are robust, shareable, and adaptable to new environments. The `fromhere` package simplifies this process, allowing you to declare paths relative to various project roots, enhancing the portability of your work.
 
-
-## Absolute vs. Relative paths
+## Absolute vs. Relative Paths
 
 <!-- Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems. -->
 
-### Absolute paths (Not Portable)
+### Absolute paths (not portable)
 
 An **absolute path** includes the full location of the files on the computer, so reading the survey data would be:
 
@@ -103,7 +99,7 @@ read.csv("C:\Users\Jane\Downloads\my-awesome-project\data\survey_cleaned_2024.cs
 
 As a result, the code cannot be reproduced without modification. Jane will have to update all the paths for them to work on her computer.
 
-### Relative paths (Portable)
+### Relative paths (portable)
 
 A **relative path** specifies the location of files from a starting folder. In an R session, relative paths start from the current working directory. When you open an RStudio Project, the current working directory will be (automatically set to) your project folder.
 
