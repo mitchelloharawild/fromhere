@@ -110,33 +110,34 @@ the portability of your project. Less portable file paths require more
 specific file structures. For example, in increasing portability:</p>
 <ul>
 <li>
-<strong>Absolute paths</strong> require the exact same file
-structure from the file system root (including the username John):
-<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>
+<p><strong>Absolute paths</strong> require the exact same file
+structure from the file system root (including the username John)</p>
+<p>e.g. <code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code></p>
 </li>
 <li>
-<strong>Home directory paths</strong> start from the user’s home
-directory (usernames can differ, but location cannot):
-<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>
+<p><strong>Home directory paths</strong> start from the user’s home
+directory (usernames can differ, but location cannot)</p>
+<p>e.g. <code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code></p>
 </li>
 <li>
-<strong>Project paths</strong> start from the project directory (the
-project location can differ, but project organisation cannot):
-<code>from_rproj("data/survey_cleaned_2024.csv")</code>
+<p><strong>Project paths</strong> start from the project directory
+(the project location can differ, but project organisation cannot)</p>
+<p>e.g. <code>from_rproj("data/survey_cleaned_2024.csv")</code></p>
 </li>
 <li>
-<strong>Execution paths</strong> start from the current working
-directory (execution folder): <code>from_wd("resources/logo.png")</code>
-within <code>"docs/analysis.qmd"</code>
+<p><strong>Execution paths</strong> start from the current working
+directory (execution folder)</p>
+<p>e.g. <code>from_wd("resources/logo.png")</code> within
+<code>"docs/analysis.qmd"</code></p>
 </li>
 </ul>
 <p>The working directory can differ depending on context. In
 general,</p>
 <ul>
-<li>When executing scripts within an R Project the working directory is
-the project folder</li>
 <li>When rendering RMarkdown/Quarto documents the working directory is
 the document’s folder</li>
+<li>When executing scripts within an R Project the working directory is
+the project folder</li>
 <li>Within a session, you can change the working manually with
 <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> (but please don’t do this!)</li>
 </ul>

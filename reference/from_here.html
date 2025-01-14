@@ -115,7 +115,7 @@ using <code><a href="https://rdrr.io/r/base/file.path.html" class="external-link
     <p>Functions support two ways to specify paths: as function arguments
 (e.g., <code>from_r_package("path/to/file")</code>) or using the <code>$</code> operator
 (e.g., <code>from_r_package$path$to$file</code>), which supports autocompletion.</p>
-<p>The following <code>from_*</code> functions are available:</p><ul><li><p><code>from_here</code>: For paths relative to the here package's automatic project root.</p></li>
+<p>The following <code>from_*</code> functions are available:</p><ul><li><p><code>from_here</code>: For paths relative to the <code>{here}</code> package's automatic project root.</p></li>
 <li><p><code>from_rproj</code>: For R project directories.</p></li>
 <li><p><code>from_r_package</code>: For R package directories.</p></li>
 <li><p><code>from_remake</code>: For remake project directories.</p></li>
@@ -137,21 +137,20 @@ using <code><a href="https://rdrr.io/r/base/file.path.html" class="external-link
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Construct a path to a file in an R package</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Construct a path from the current working directory</span></span></span>
+<span class="r-in"><span><span class="fu">from_wd</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Construct a path to a file in an R package</span></span></span>
 <span class="r-in"><span><span class="fu">from_r_package</span><span class="op">(</span><span class="st">"R"</span>, <span class="st">"my_file.R"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/fromhere/fromhere/R/my_file.R"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Construct a path in a pkgdown project</span></span></span>
 <span class="r-in"><span><span class="va">from_pkgdown</span><span class="op">$</span><span class="va">docs</span><span class="op">$</span><span class="va">index.html</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> No root directory found in /home/runner/work/fromhere/fromhere/docs/reference or its parent directories. Root criterion: one of</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> - contains a file "_pkgdown.yml"</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> - contains a file "_pkgdown.yaml"</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> - contains a file "pkgdown/_pkgdown.yml"</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> - contains a file "inst/_pkgdown.yml"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Construct a path in a Git repository</span></span></span>
 <span class="r-in"><span><span class="fu">from_git</span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"main.c"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/fromhere/fromhere/src/main.c"</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
