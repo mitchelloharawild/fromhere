@@ -78,18 +78,24 @@ As a result, the code cannot be reproduced without modification. Jane will have 
 
 ### Relative paths (Portable)
 
-A **relative path** includes the location of files from a specified starting point. In R, relative paths are start from the current working directory - if you're working within an RStudio Project this will be your project folder.
-
-The `fromhere` package allows you to specify the starting point of relative paths explicitly. This can be useful since the paths will work even if the working directory in R changes.
+A **relative path** specifies the location of files from a starting folder. In an R session, relative paths start from the current working directory. When you open an RStudio Project, the current working directory will be (automatically set to) your project folder.
 
 The code for reading the survey data with a relative path is:
 
 ```r
-# Path relative to the project root
-read.csv(from_rproj("data/survey_cleaned_2024.csv"))
+# Path relative to the working directory
+read.csv("data/survey_cleaned_2024.csv")
 ```
 
 Notice that the relative path doesn't include any details about the location of the project on the computer. This allows the project folder to be moved around (on the same computer or shared with others) without needing to change the file paths.
+
+The `fromhere` package allows you to specify the starting point of relative paths **explicitly**. This can be useful since the paths will work even if the working directory in R changes. For example, the working directory is changed to the document's folder (`"docs"`) when rendering RMarkdown/Quarto documents. Using `fromhere::from_rproj()` will explicitly specify paths starting from the project folder even in RMarkdown/Quarto documents:
+
+```r
+# Path relative to the project folder
+library(fromhere)
+read.csv(from_rproj("data/survey_cleaned_2024.csv"))
+```
 
 ## Project portability
 
