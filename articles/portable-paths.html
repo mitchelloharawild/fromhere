@@ -90,11 +90,11 @@
 portable and reproducible projects. Portable projects are
 self-contained, meaning all code, data and other files needed by your
 project are contained within it.</p>
-<p>Relative paths play a central role in portability, as they allow you
-to specify file locations relative to a known reference point (e.g., the
-project root) instead of using system-specific absolute paths. This
-allows file paths to work on any system, which allows others to
-reproduce your work without modifying file paths.</p>
+<p>Relative paths play a central role in portability, allowing you to
+specify file locations relative to a known reference point (e.g., the
+project root). Compared to system-specific absolute paths, relative file
+paths work on any system, allowing others to reproduce your work without
+modifying file paths.</p>
 <p>This vignette demonstrates how relative paths from different project
 roots can be created using the <code>fromhere</code> package, with
 discussion on how each path type affects the portability of your
@@ -102,12 +102,9 @@ project.</p>
 <div class="section level2">
 <h2 id="absolute-vs--relative-paths">Absolute vs. Relative paths<a class="anchor" aria-label="anchor" href="#absolute-vs--relative-paths"></a>
 </h2>
-<p>Using relative paths ensures that file locations are resolved
-dynamically based on the current project structure. This avoids
-hardcoding system-specific absolute paths, which often differ between
-different systems.</p>
+<!-- Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems. -->
 <p>Consider the R project <code>"my-awesome-project"</code>, which has
-been saved to the John’s Documents folder
+been saved to the Documents folder on John’s computer
 (<code>"/Users/John/Documents/"</code>). It has the following
 contents:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">my-awesome-project/</span></span>
@@ -156,21 +153,30 @@ will have to update all the paths for them to work on her computer.</p>
 <div class="section level3">
 <h3 id="relative-paths-portable">Relative paths (Portable)<a class="anchor" aria-label="anchor" href="#relative-paths-portable"></a>
 </h3>
-<p>A <strong>relative path</strong> includes the location of files from
-a specified starting point. In R, relative paths are start from the
-current working directory - if you’re working within an RStudio Project
-this will be your project folder.</p>
-<p>The <code>fromhere</code> package allows you to specify the starting
-point of relative paths explicitly. This can be useful since the paths
-will work even if the working directory in R changes.</p>
+<p>A <strong>relative path</strong> specifies the location of files from
+a starting folder. In an R session, relative paths start from the
+current working directory. When you open an RStudio Project, the current
+working directory will be (automatically set to) your project
+folder.</p>
 <p>The code for reading the survey data with a relative path is:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Path relative to the project root</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="../reference/from_here.html">from_rproj</a></span><span class="op">(</span><span class="st">"data/survey_cleaned_2024.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Path relative to the working directory</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"data/survey_cleaned_2024.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Notice that the relative path doesn’t include any details about the
 location of the project on the computer. This allows the project folder
 to be moved around (on the same computer or shared with others) without
 needing to change the file paths.</p>
+<p>The <code>fromhere</code> package allows you to specify the starting
+point of relative paths <strong>explicitly</strong>. This can be useful
+since the paths will work even if the working directory in R changes.
+For example, the working directory is changed to the document’s folder
+(<code>"docs"</code>) when rendering RMarkdown/Quarto documents. Using
+<code><a href="../reference/from_here.html">fromhere::from_rproj()</a></code> will explicitly specify paths
+starting from the project folder even in RMarkdown/Quarto documents:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Path relative to the project folder</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mitchelloharawild/fromhere" class="external-link">fromhere</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="../reference/from_here.html">from_rproj</a></span><span class="op">(</span><span class="st">"data/survey_cleaned_2024.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -180,22 +186,23 @@ needing to change the file paths.</p>
 the portability of your project. Less portable file paths require more
 specific file structures, for example in increasing portability:</p>
 <ul>
-<li><p>Absolute paths
+<li><p><strong>Absolute paths</strong>
 (<code>"/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
 These paths require the exact same file structure from the file system
 root (including the username John)</p></li>
-<li><p>Home directory paths
+<li><p><strong>Home directory paths</strong>
 (<code>"~/Documents/my-awesome-project/data/survey_cleaned_2024.csv"</code>)
 These paths start from the user’s home directory (usernames can differ,
 but location cannot)</p></li>
-<li><p>Project paths
+<li><p><strong>Project paths</strong>
 (<code>from_rproj("data/survey_cleaned_2024.csv")</code>) These paths
 start from the project directory (the project location can differ, but
 project organisation cannot)</p></li>
 <li>
-<p>Execution paths (<code>from_wd("resources/logo.png")</code>
-within <code>"docs/analysis.qmd"</code>) These paths start from the
-current working directory (execution folder).</p>
+<p><strong>Execution paths</strong>
+(<code>from_wd("resources/logo.png")</code> within
+<code>"docs/analysis.qmd"</code>) These paths start from the current
+working directory (execution folder).</p>
 <p>The working directory can change depending on context:</p>
 <ul>
 <li>Scripts within an R Project (working directory is the project
@@ -207,19 +214,6 @@ this!)</li>
 </ul>
 </li>
 </ul>
-<blockquote>
-<p><strong>Aside: <code>.</code>, and <code>..</code></strong></p>
-<p>File paths can also include <code>.</code> and <code>..</code>. These
-special paths refer to current directory (<code>.</code>) and the parent
-directory (<code>..</code>).</p>
-<p>This allows you to navigate up folders, for example
-<code>from_rproj("..")</code> will give you the folder above the project
-(<code>"/Users/John/Documents"</code> for John, and
-<code>"C:\Users\Jane\Downloads"</code> for Jane).</p>
-<p>Using <code>from_rproj("..")</code> results in a less portable
-project, since your work now depends on the file structure above your
-project folder.</p>
-</blockquote>
 <div class="section level3">
 <h3 id="portability-example">Portability example<a class="anchor" aria-label="anchor" href="#portability-example"></a>
 </h3>
@@ -252,6 +246,21 @@ can create projects that are robust, shareable, and adaptable to new
 environments. The <code>fromhere</code> package simplifies this process,
 allowing you to declare paths relative to various project roots,
 enhancing the portability of your work.</p>
+</div>
+<div class="section level3">
+<h3 id="aside---and---">
+<strong>Aside: <code>.</code>, and <code>..</code></strong><a class="anchor" aria-label="anchor" href="#aside---and---"></a>
+</h3>
+<p>File paths can also include <code>.</code> and <code>..</code>.</p>
+<p>These special paths refer to current directory (<code>.</code>) and
+the parent directory (<code>..</code>).</p>
+<p>This allows you to navigate up folders, for example
+<code>from_rproj("..")</code> will give you the folder above the project
+(<code>"/Users/John/Documents"</code> for John, and
+<code>"C:\Users\Jane\Downloads"</code> for Jane).</p>
+<p>Using <code>from_rproj("..")</code> results in a less portable
+project, since your work now depends on the file structure above your
+project folder.</p>
 </div>
 </div>
   </div>
