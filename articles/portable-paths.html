@@ -106,9 +106,10 @@ project.</p>
 dynamically based on the current project structure. This avoids
 hardcoding system-specific absolute paths, which often differ between
 different systems.</p>
-<p>Consider the R project “my-awesome-project”, which has been saved to
-the John’s Documents folder ( <code>"/Users/John/Documents/"</code>). It
-has the following contents:</p>
+<p>Consider the R project <code>"my-awesome-project"</code>, which has
+been saved to the John’s Documents folder
+(<code>"/Users/John/Documents/"</code>). It has the following
+contents:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">my-awesome-project/</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">├──</span> data-raw/                   <span class="co"># Raw / unprocessed data files</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">│</span>   ├── survey_results_2024.csv</span>
@@ -145,8 +146,8 @@ files on the computer, so reading the survey data would be:</p>
 <p>This is <strong>NOT</strong> portable, imagine if this project was
 shared with Jane who saved it in the Downloads folder of their Windows
 computer. In this case, the file path starting with
-“/Users/John/Documents” doesn’t exist on Jane’s computer. Instead the
-suitable path for Jane is:</p>
+<code>"/Users/John/Documents"</code> doesn’t exist on Jane’s computer.
+Instead the suitable path for Jane is:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Path hardcoded to Jane's specific system</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"C:\Users\Jane\Downloads\my-awesome-project\data\survey_cleaned_2024.csv"</span>)</span></code></pre></div>
 <p>As a result, the code cannot be reproduced without modification. Jane
@@ -213,7 +214,8 @@ special paths refer to current directory (<code>.</code>) and the parent
 directory (<code>..</code>).</p>
 <p>This allows you to navigate up folders, for example
 <code>from_rproj("..")</code> will give you the folder above the project
-(“/Users/John/Documents” for John, and “C:” for Jane).</p>
+(<code>"/Users/John/Documents"</code> for John, and
+<code>"C:\Users\Jane\Downloads"</code> for Jane).</p>
 <p>Using <code>from_rproj("..")</code> results in a less portable
 project, since your work now depends on the file structure above your
 project folder.</p>
