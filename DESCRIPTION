@@ -13,6 +13,8 @@ Description: Provides a set of helper functions for constructing file paths
     or `$` to navigate into folders to specific files supported by 
     autocompletion.
 License: MIT + file LICENSE
+Imports: 
+    rprojroot
 Suggests: 
     here,
     knitr,
@@ -24,6 +26,4 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/mitchelloharawild/fromhere
 BugReports: https://github.com/mitchelloharawild/fromhere/issues
 RoxygenNote: 7.3.2
-Imports: 
-    rprojroot
 VignetteBuilder: knitr
