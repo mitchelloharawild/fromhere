@@ -28,7 +28,7 @@ This vignette demonstrates how relative paths from different project roots can b
 
 Using relative paths ensures that file locations are resolved dynamically based on the current project structure. This avoids hardcoding system-specific absolute paths, which often differ between different systems.
 
-Consider the R project "my-awesome-project", which has been saved to the John's Documents folder ( `"/Users/John/Documents/"`). It has the following contents:
+Consider the R project `"my-awesome-project"`, which has been saved to the John's Documents folder (`"/Users/John/Documents/"`). It has the following contents:
 
 ```bash
 my-awesome-project/
@@ -67,7 +67,7 @@ An **absolute path** includes the full location of the files on the computer, so
 read.csv("/Users/John/Documents/my-awesome-project/data/survey_cleaned_2024.csv")
 ```
 
-This is **NOT** portable, imagine if this project was shared with Jane who saved it in the Downloads folder of their Windows computer. In this case, the file path starting with "/Users/John/Documents" doesn't exist on Jane's computer. Instead the suitable path for Jane is:
+This is **NOT** portable, imagine if this project was shared with Jane who saved it in the Downloads folder of their Windows computer. In this case, the file path starting with `"/Users/John/Documents"` doesn't exist on Jane's computer. Instead the suitable path for Jane is:
 
 ```r
 # Path hardcoded to Jane's specific system
@@ -114,7 +114,7 @@ How you organise your project files and specify paths to them changes the portab
 > File paths can also include `.` and `..`.
 > These special paths refer to current directory (`.`) and the parent directory (`..`).
 >
-> This allows you to navigate up folders, for example `from_rproj("..")` will give you the folder above the project ("/Users/John/Documents" for John, and "C:\Users\Jane\Downloads" for Jane).
+> This allows you to navigate up folders, for example `from_rproj("..")` will give you the folder above the project (`"/Users/John/Documents"` for John, and `"C:\Users\Jane\Downloads"` for Jane).
 > 
 > Using `from_rproj("..")` results in a less portable project, since your work now depends on the file structure above your project folder.
 
